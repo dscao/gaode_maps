@@ -1,4 +1,4 @@
-# 墨澜(高德)地图增强版  gaode_maps
+# 墨澜(高德)地图增强版  gaode_maps 还需测试及调整，计划2024.1.1发布
 gaode_maps for homeassistant
 
 1、使用自定义集成方式UI配置
