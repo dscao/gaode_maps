@@ -7,6 +7,11 @@ gaode_maps for homeassistant
 
 3、手机上在轨迹的标记点按点也可显示时刻
 
+4、增加自定义卡片
+
+5、实体对话框可显示定位地图，增加属性时custom_ui_more_info: gaode-map 显示
+
+感谢 https://github.com/shaonianzhentan/google_maps 百度地图项目
 
 
 ![12](https://github.com/dscao/gaode_maps/assets/16587914/0d9ee817-d68a-4776-a1ce-b8ab0267c170)
