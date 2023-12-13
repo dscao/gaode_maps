@@ -1,0 +1,9 @@
+{
+    "domain": "gaode_maps",
+    "name": "墨澜地图",
+    "codeowners": ["@dscao"],    
+    "config_flow": true,
+    "dependencies": ["frontend"],
+    "documentation": "https://github.com/dscao/gaode_maps",
+    "dependencies": ["frontend"]
+}
