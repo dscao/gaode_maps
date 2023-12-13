@@ -5,5 +5,6 @@
     "config_flow": true,
     "dependencies": ["frontend"],
     "documentation": "https://github.com/dscao/gaode_maps",
-    "dependencies": ["frontend"]
+    "dependencies": ["frontend"],
+    "version": "2024.1.1"
 }
