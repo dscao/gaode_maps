@@ -1,16 +1,11 @@
-<html>
+<!DOCTYPE html>
+<html lang="cn">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=8">
-    <meta http-equiv="Expires" content="0">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Cache-control" content="no-cache, must-revalidate">
-    <meta http-equiv="Cache" content="no-cache">
-    <title>ha-inkwavemap</title>
-    
-    <script src="js/jquery-1.12.4.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>高德地图卡片</title>
+  <script src="js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
     
     <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
@@ -33,11 +28,6 @@
 				securityJsCode:GaodeMapjscode,
 			}
 		}
-			else if (GaodeMapserviceHost!="") {
-			window._AMapSecurityConfig = {
-				serviceHost:GaodeMapserviceHost,
-			}
-		}
     </script>
 
 	<script type="text/javascript">
@@ -53,10 +43,11 @@
     
     <style type="text/css">
     </style>
+	
 </head>
 
 <body>
-    <script src="index.js?"+Math.random()></script>
+    <script src="card.js?"+Math.random()></script>
     <script type="text/javascript">
     </script>
 
@@ -94,12 +85,8 @@
         </div>
     </div>
     <div id="dock">
-        <img id="toolbar_zoomin" src="images/toolbar_zoomin_disable.png" width="32">
-        <img id="toolbar_zoomout" src="images/toolbar_zoomout_disable.png" width="32">
-        <img id="toolbar_traffic" src="images/toolbar_traffic_disable.png" width="32">
-        <img id="toolbar_homepoint" src="images/toolbar_homepoint_disable.png" width="32">
-        <img id="toolbar_homerange" src="images/toolbar_homerange_disable.png" width="32">
-        <img id="toolbar_devicelist" src="images/toolbar_devicelist_disable.png" width="32">
+        <img id="toolbar_zoomin" src="images/toolbar_zoomin_disable.png" width="18">
+        <img id="toolbar_zoomout" src="images/toolbar_zoomout_disable.png" width="18">
     </div>
 	
 </body>
