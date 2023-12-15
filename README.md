@@ -39,6 +39,8 @@ homeassistant 配置 > 设备与服务 > 添加集成 > 搜索 gaode_maps 或墨
 ha长期访问口令： homeassistant 左下方 点击用户名称进入用户资料页 > 长期访问令牌 > 创建令牌 \
 （推荐使用令牌，否则手机app端不可使用。）
 
+备注：追踪设备只针对 device_tracker 类型。
+
 ![12](https://github.com/dscao/gaode_maps/assets/16587914/0d9ee817-d68a-4776-a1ce-b8ab0267c170)
 
 
