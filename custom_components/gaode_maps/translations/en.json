@@ -1,0 +1,34 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "title": "墨澜地图",
+                "description": "api申请： https://console.amap.com/dev/key/app",
+                "data": {
+                    "longtoken": "ha的长期访问令牌(app使用或不保存密码时必须填写)",
+					"trackerids": "追踪设备",
+                    "gaodekey": "高德地图Web端key(不正确将没有回家路线和时间)",
+                    "jscode": "安全密钥jscode"
+                    
+                }
+            }
+        },
+        "error": {},
+        "abort": {
+            "single_instance_allowed": "仅允许单个配置."
+        }
+    },
+    "options": {
+        "step": {
+            "user":{
+                "data": {
+                    "longtoken": "ha的长期访问令牌(app使用或不保存密码时必须填写)",
+					"trackerids": "追踪设备（不选择则为所有设备）",
+                    "gaodekey": "高德地图Web端key(不正确将不显示回家路线和时间)",
+                    "jscode": "安全密钥jscode"
+                },
+                "description": "配置中，修改追踪设备时需重载集成生效。"
+            }
+        }
+    }
+}
