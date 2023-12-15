@@ -11,6 +11,11 @@ gaode_maps for homeassistant
 
 5、实体对话框可显示定位地图，增加属性时custom_ui_more_info: gaode-map 显示
 
+6、增加比例尺显示
+
+7、增加卫星视图
+
+
 本项目修改自 https://github.com/cxlwill/ha-inkwavemap 
 
 参考借鉴 https://github.com/shaonianzhentan/google_maps 
