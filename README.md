@@ -16,6 +16,18 @@ gaode_maps for homeassistant
 参考借鉴 https://github.com/shaonianzhentan/google_maps 
 
 
+# 安装方法
+
+
+HACS > 集成 > 右上角自定义存储库填入： https://github.com/dscao/gaode_maps 集成，随后下载安装，按提示重启ha.
+
+或者下载 [latest release](https://github.com/dscao/gaode_maps/releases) 后解压复制gaode_maps目录到 /config/custom_components目录下，重启ha。
+
+# 配置方法
+
+homeassistant 配置 > 设备与服务 > 添加集成 > 搜索 gaode_maps 或墨澜地图，按提示操作。
+
+
 
 ![12](https://github.com/dscao/gaode_maps/assets/16587914/0d9ee817-d68a-4776-a1ce-b8ab0267c170)
 
