@@ -1,6 +1,6 @@
 var map = new Map();
 var homePoint = null;
-var backhomeTrackEnabled = true;
+var backhomeTrackEnabled = false;
 var backhomeTrackType = null;
 var getDataMode = null; // 'client','server'
 var url = null;
@@ -56,7 +56,7 @@ $(function() {
 	$('#queryTimeTo').datetimebox('setValue', getCurrentDate()+" 23:59");
 	
 	$('#btnQuery').linkbutton({text:txtTrackShow[lang]});
-	$('#btnBackhome').linkbutton({text:txtBackHide[lang]});
+	$('#btnBackhome').linkbutton({text:txtBackShow[lang]});
 	
 	var backhomeType = [];
 	backhomeType.push({ "text": txtBackDrive[lang], "id": "drive" });
@@ -67,11 +67,22 @@ $(function() {
 		onChange: function (n,o) {
 			backhomeTrackType = n;
 			var rows = $("#deviceListGrid").datagrid("getChecked");
-			for(var i=0; i<rows.length; i++) {
-				map.showdevicemarker(rows[i].id, true);
-				map.drawdrivingmarker(rows[i].id, homePoint, backhomeTrackType);
-				
-			}
+			let drawCount = 0;
+            for (var i = 0; i < rows.length; i++) {
+                map.showdevicemarker(rows[i].id, true);
+                
+                // 检查1秒内是否已调用了3次 api的QPS是3次/秒
+                if (++drawCount <= 2) { // 允许最多3次调用（因为从0开始计数）
+                    map.drawdrivingmarker(rows[i].id, homePoint, backhomeTrackType);
+                } else {
+                    // 如果已经达到了3次，等待1秒后继续
+                    setTimeout(() => {
+                        if (++drawCount <= 2) { // 继续处理
+                            map.drawdrivingmarker(rows[i].id, homePoint, backhomeTrackType);
+                        }
+                    }, 1000);
+                }
+            }
 			SaveStorage();
 		}
 	});
@@ -445,7 +456,8 @@ function getDevice(deviceId) {
                     if(longitude != getDeviceListValue(deviceId, 'lon') && latitude != getDeviceListValue(deviceId, 'lat')) {
                         updateDeviceList(deviceId, {'lon': longitude, 'lat': latitude, 'state': state ,'state_r': state_r});
                         map.drawdevicemarker(deviceId, deviceName, {'lon': longitude, 'lat': latitude});
-                        map.drawdrivingmarker(deviceId, homePoint, backhomeTrackType);
+                        // 注释掉以下代码，避免默认请求回家的时间
+                        // map.drawdrivingmarker(deviceId, homePoint, backhomeTrackType);
                     }
                 }
             }
@@ -454,6 +466,7 @@ function getDevice(deviceId) {
     getDeviceFun();
     setInterval(getDeviceFun, 10000);
 }
+
     
 $(document).on("zoomchange", function() {
     syncToolbarState(['zoomin', 'zoomout']);
