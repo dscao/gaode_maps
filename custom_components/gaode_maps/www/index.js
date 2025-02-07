@@ -57,35 +57,69 @@ $(function() {
 	
 	$('#btnQuery').linkbutton({text:txtTrackShow[lang]});
 	$('#btnBackhome').linkbutton({text:txtBackShow[lang]});
+    
+    let drawCount = 0; // 计数器，记录1秒内的调用次数
+    let lastCallTime = 0; // 记录上一次调用的时间
+
+    function drawDrivingMarkerWithLimit(deviceId, homePoint, backhomeTrackType) {
+        const currentTime = Date.now();
+
+        // 检查当前时间与上一次调用的时间差
+        if (currentTime - lastCallTime >= 1000) {
+            // 如果超过1秒，重置计数器
+            drawCount = 0;
+            lastCallTime = currentTime;
+        }
+
+        // 如果1秒内调用次数小于2次，则执行
+        if (drawCount < 2) {
+            map.drawdrivingmarker(deviceId, homePoint, backhomeTrackType);
+            drawCount++; // 增加计数器
+        } else {
+            // 如果1秒内已经调用2次，则延迟到下一秒再执行
+            setTimeout(() => {
+                map.drawdrivingmarker(deviceId, homePoint, backhomeTrackType);
+            }, 1000 - (currentTime - lastCallTime));
+            drawCount = 0; // 重置计数器
+            lastCallTime = Date.now(); // 更新上一次调用的时间
+        }
+    }
 	
 	var backhomeType = [];
 	backhomeType.push({ "text": txtBackDrive[lang], "id": "drive" });
 	backhomeType.push({ "text": txtBackRide[lang], "id": "ride" });
 	backhomeType.push({ "text": txtBackWalk[lang], "id": "walk" });
     $("#cbBackhome").combobox("loadData", backhomeType);
-	$("#cbBackhome").combobox({
-		onChange: function (n,o) {
-			backhomeTrackType = n;
-			var rows = $("#deviceListGrid").datagrid("getChecked");
-			let drawCount = 0;
+	let isComboboxEnabled = true; // 标志变量，记录下拉框是否可操作
+    $("#cbBackhome").combobox({
+        onChange: function (n, o) {
+            if (!isComboboxEnabled) {
+                return; // 如果下拉框不可操作，直接返回
+            }
+
+            // 禁用下拉框
+            isComboboxEnabled = false;
+            $("#cbBackhome").combobox('disable'); // 禁用下拉框（如果使用 jQuery EasyUI）
+
+            // 设置2秒后重新启用下拉框
+            setTimeout(() => {
+                isComboboxEnabled = true;
+                $("#cbBackhome").combobox('enable'); // 启用下拉框（如果使用 jQuery EasyUI）
+            }, 2000);
+
+            // 原有的逻辑
+            backhomeTrackType = n;
+            var rows = $("#deviceListGrid").datagrid("getChecked");
+
             for (var i = 0; i < rows.length; i++) {
-                map.showdevicemarker(rows[i].id, true);
-                
-                // 检查1秒内是否已调用了3次 api的QPS是3次/秒
-                if (++drawCount <= 2) { // 允许最多3次调用（因为从0开始计数）
-                    map.drawdrivingmarker(rows[i].id, homePoint, backhomeTrackType);
-                } else {
-                    // 如果已经达到了3次，等待1秒后继续
-                    setTimeout(() => {
-                        if (++drawCount <= 2) { // 继续处理
-                            map.drawdrivingmarker(rows[i].id, homePoint, backhomeTrackType);
-                        }
-                    }, 1000);
+                //map.showdevicemarker(rows[i].id, true);
+                if (backhomeTrackEnabled == true) {
+                    drawDrivingMarkerWithLimit(rows[i].id, homePoint, backhomeTrackType); // 替换为限频调用
                 }
             }
-			SaveStorage();
-		}
-	});
+            SaveStorage();
+        }
+    });
 	//var cbBackhomedata = $('#cbBackhome').combobox('getData');
 	//$('#cbBackhome').combobox('select',cbBackhomedata[0].id);
 
@@ -116,32 +150,36 @@ $(function() {
             for(var index in rows) {
                 rows[index].checked = true;
                 map.showdevicemarker(rows[index].id, true);
-                map.drawdrivingmarker(rows[index].id, homePoint, backhomeTrackType);
+                //map.drawdrivingmarker(rows[index].id, homePoint, backhomeTrackType);
+                let drawCount = 0; // 计数器，记录1秒内的调用次数
+                let lastCallTime = 0; // 记录上一次调用的时间
+                for (var index in rows) {
+                    map.showdevicemarker(rows[index].id, true);
+                }
             }
-			map.drawdrivingmarkerShow(backhomeTrackEnabled);
+			//map.drawdrivingmarkerShow(backhomeTrackEnabled);
         },
         
         onCheck: function(rowIndex, rowData) {
             rowData.checked = true;
             map.showdevicemarker(rowData.id, true);
-            map.drawdrivingmarker(rowData.id, homePoint, backhomeTrackType);
-			map.drawdrivingmarkerShow(backhomeTrackEnabled);
+            //map.drawdrivingmarker(rowData.id, homePoint, backhomeTrackType);
+			//map.drawdrivingmarkerShow(backhomeTrackEnabled);
         },
         
         onUncheckAll: function(rows) {
             for(var index in rows) {
                 rows[index].checked = false;
                 map.showdevicemarker(rows[index].id, false);
-                map.drawdrivingmarker(rows[index].id, homePoint, backhomeTrackType);
             }
-			map.drawdrivingmarkerShow(backhomeTrackEnabled);
+			//map.drawdrivingmarkerShow(backhomeTrackEnabled);
         },
         
         onUncheck: function(rowIndex, rowData) {
             rowData.checked = false;
             map.showdevicemarker(rowData.id, false);
-            map.drawdrivingmarker(rowData.id, homePoint, backhomeTrackType);
-			map.drawdrivingmarkerShow(backhomeTrackEnabled);
+            //map.drawdrivingmarker(rowData.id, homePoint, backhomeTrackType);
+			//map.drawdrivingmarkerShow(backhomeTrackEnabled);
         }
 		
     });
@@ -257,30 +295,40 @@ $(function() {
 		SaveStorage();
 		
     });
-	$('#btnBackhome').bind('click', function(){
-		if($("#btnBackhome").linkbutton("options").text == txtBackShow[lang]) {
-			$('#btnBackhome').linkbutton({text:txtBackHide[lang]});
-			backhomeTrackEnabled = true;
-			var rows = $("#deviceListGrid").datagrid("getChecked");
-			for(var i=0; i<rows.length; i++) {
-				map.showdevicemarker(rows[i].id, true);
-				map.drawdrivingmarker(rows[i].id, homePoint, backhomeTrackType);
-				
-			}
-        } else {
-            $('#btnBackhome').linkbutton({text:txtBackShow[lang]});
-			backhomeTrackEnabled = false;
-			map.drawdrivingmarkerShow(backhomeTrackEnabled);
+	let isButtonEnabled = true; // 标志变量，记录按钮是否可点击
+
+    $('#btnBackhome').bind('click', function () {
+        if (!isButtonEnabled) {
+            return; // 如果按钮不可点击，直接返回
         }
-		SaveStorage();
-		//var rows = $("#deviceListGrid").datagrid("getChecked");
-		//for(var i=0; i<rows.length; i++) {
-			//map.showdevicemarker(rows[i].id, backhomeTrackEnabled);
-			//map.drawdrivingmarker(rows[i].id, homePoint);
-			
-		//}
-		
+
+        // 禁用按钮
+        isButtonEnabled = false;
+        $('#btnBackhome').linkbutton('disable'); // 禁用按钮（如果使用 jQuery EasyUI）
+
+        // 设置2秒后重新启用按钮
+        setTimeout(() => {
+            isButtonEnabled = true;
+            $('#btnBackhome').linkbutton('enable'); // 启用按钮（如果使用 jQuery EasyUI）
+        }, 2000);
+
+        if ($("#btnBackhome").linkbutton("options").text == txtBackShow[lang]) {
+            $('#btnBackhome').linkbutton({ text: txtBackHide[lang] });
+            backhomeTrackEnabled = true;
+            var rows = $("#deviceListGrid").datagrid("getChecked");
+
+            for (var i = 0; i < rows.length; i++) {
+                map.showdevicemarker(rows[i].id, true);
+                drawDrivingMarkerWithLimit(rows[i].id, homePoint, backhomeTrackType); // 替换为限频调用
+            }
+        } else {
+            $('#btnBackhome').linkbutton({ text: txtBackShow[lang] });
+            backhomeTrackEnabled = false;
+        }
+        map.drawdrivingmarkerShow(backhomeTrackEnabled);
+        SaveStorage();
     });
+    
 	
 	$('#btnDrawStart').bind('click', function(){
 		map.DrawStart();
@@ -457,7 +505,7 @@ function getDevice(deviceId) {
                         updateDeviceList(deviceId, {'lon': longitude, 'lat': latitude, 'state': state ,'state_r': state_r});
                         map.drawdevicemarker(deviceId, deviceName, {'lon': longitude, 'lat': latitude});
                         // 注释掉以下代码，避免默认请求回家的时间
-                        // map.drawdrivingmarker(deviceId, homePoint, backhomeTrackType);
+                        // map.drawDrivingMarkerWithLimit(deviceId, homePoint, backhomeTrackType);
                     }
                 }
             }
