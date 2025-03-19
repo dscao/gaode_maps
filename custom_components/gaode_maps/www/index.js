@@ -413,23 +413,25 @@ function getLocationData(deviceId){
 		async: false,
 		dataType: "json",
 		success: function(data) {
-			var datajson = eval(data[0]);
-			
-			$.each(datajson, function (i, n)
-			{
-				if (n.attributes["source_type"] == "gps")
-				{
-					arr.push({
-						'longitude': n.attributes['longitude'], 
-						'latitude': n.attributes['latitude'],
-						'updatedate': getDatetime(n.last_updated),
-						'lnglat': [ n.attributes['longitude'],n.attributes['latitude']]
-					});
-				}
-				
-			});
-			//map.query(arr);
-		}
+            var datajson = eval(data[0]);
+            $.each(datajson, function (i, n) {
+            if (n.attributes["source_type"] == "gps" && 
+                n.attributes['longitude'] !== null &&
+                n.attributes['longitude'] !== undefined &&
+                n.attributes['latitude'] !== null &&
+                n.attributes['latitude'] !== undefined &&
+                n.attributes['longitude'] !== "" &&
+                n.attributes['latitude'] !== "") {
+                    arr.push({
+                       'longitude': n.attributes['longitude'], 
+                       'latitude': n.attributes['latitude'],
+                       'updatedate': getDatetime(n.last_updated),
+                       'lnglat': [ n.attributes['longitude'],n.attributes['latitude']]
+                    });
+                }
+            });
+            //map.query(arr);
+        }
 	});
 	return arr;
 }
