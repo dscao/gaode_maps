@@ -425,7 +425,7 @@ function getLocationData(deviceId){
                     arr.push({
                        'longitude': n.attributes['longitude'], 
                        'latitude': n.attributes['latitude'],
-                       'updatedate': getDatetime(n.last_updated),
+                       'updatedate': n.attributes['lastseen'] || n.attributes['last_update'] || getDatetime(n.last_updated),
                        'lnglat': [ n.attributes['longitude'],n.attributes['latitude']]
                     });
                 }
@@ -482,11 +482,11 @@ function getDevice(deviceId) {
              //   var deviceName = unicode2hanzi(data.attributes.friendly_name);
                 var deviceName = data.attributes.friendly_name;
 				var state_r = data.state;
-				var state = "---";
+				var state = data.attributes.address || "---";
 				
 				if (state_r == "not_home")
 				{
-					state_r = "";
+					state_r = getLeftFiveChars(state);
 				}
 				else
 				{
@@ -515,6 +515,28 @@ function getDevice(deviceId) {
     };
     getDeviceFun();
     setInterval(getDeviceFun, 10000);
+}
+
+function getLeftFiveChars(str) {
+  if (str === null || str === undefined) {
+    return "";
+  }
+  const len = str.length;
+  if (len < 5) {
+    return str;
+  }
+  return str.slice(0, 5);
+}
+
+function getRightFiveChars(str) {
+  if (str === null || str === undefined) {
+    return "";
+  }
+  const len = str.length;
+  if (len < 5) {
+    return str;
+  }
+  return str.slice(-5);
 }
 
     
