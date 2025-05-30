@@ -415,7 +415,7 @@ function getLocationData(deviceId){
 		success: function(data) {
             var datajson = eval(data[0]);
             $.each(datajson, function (i, n) {
-            if (n.attributes["source_type"] == "gps" && 
+            if (//n.attributes["source_type"] == "gps" &&  取消过滤跟踪来源类型
                 n.attributes['longitude'] !== null &&
                 n.attributes['longitude'] !== undefined &&
                 n.attributes['latitude'] !== null &&
