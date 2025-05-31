@@ -425,7 +425,7 @@ function getLocationData(deviceId){
                     arr.push({
                        'longitude': n.attributes['longitude'], 
                        'latitude': n.attributes['latitude'],
-                       'updatedate': n.attributes['lastseen'] || n.attributes['last_update'] || getDatetime(n.last_updated),
+                       'updatedate': n.attributes['lastseen'] || getDatetime(n.last_updated),
                        'lnglat': [ n.attributes['longitude'],n.attributes['latitude']]
                     });
                 }
