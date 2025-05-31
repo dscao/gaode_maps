@@ -415,7 +415,7 @@ function getLocationData(deviceId){
 		success: function(data) {
             var datajson = eval(data[0]);
             $.each(datajson, function (i, n) {
-            if (//n.attributes["source_type"] == "gps" &&  取消过滤跟踪来源类型
+            if (//n.attributes["source_type"] == "gps" &&  取消过滤设备类型
                 n.attributes['longitude'] !== null &&
                 n.attributes['longitude'] !== undefined &&
                 n.attributes['latitude'] !== null &&
@@ -423,10 +423,12 @@ function getLocationData(deviceId){
                 n.attributes['longitude'] !== "" &&
                 n.attributes['latitude'] !== "") {
                     arr.push({
-                       'longitude': n.attributes['longitude'], 
-                       'latitude': n.attributes['latitude'],
-                       'updatedate': n.attributes['lastseen'] || getDatetime(n.last_updated),
-                       'lnglat': [ n.attributes['longitude'],n.attributes['latitude']]
+                        'longitude': n.attributes['longitude'],
+                        'latitude': n.attributes['latitude'],
+                        'updatedate': (n.attributes['lastseen'] ? '最后出现：'+n.attributes['lastseen'] +'<br/>': '') + 
+                                       (n.attributes['latest_report_time'] ? '上报时间：' + n.attributes['latest_report_time'] +'<br/>记录时间：' : '') +
+                                       (getDatetime(n.last_updated) ? '' + getDatetime(n.last_updated) : ''),
+                        'lnglat': [n.attributes['longitude'], n.attributes['latitude']]
                     });
                 }
             });
