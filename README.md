@@ -15,7 +15,7 @@ gaode_maps for homeassistant
 
 7、增加卫星视图
 
-8、如果设备属性有address，则不在预设的地址时显示address的内容。轨迹中的时间优先显示 设备最后出现时间>设备更新时间>系统更新时间，这样适配macless-haystack的时间点相对好一点。
+8、轨迹中的时间针对macless-haystack的时间点显示更多信息： 最后出现+上报时间+记录时间。（由 [cloud_gps](https://github.com/dscao/cloud_gps) 集成接入时）
 
 
 本项目修改自 https://github.com/cxlwill/ha-inkwavemap 
