@@ -48,9 +48,13 @@ ha长期访问口令： homeassistant 左下方 点击用户名称进入用户�
 
 备注：追踪设备只针对 device_tracker 类型。
 
-![12](https://github.com/dscao/gaode_maps/assets/16587914/0d9ee817-d68a-4776-a1ce-b8ab0267c170)
+显示轨迹操作：需先在列表中选中一个设备，选好区间时间，再点“显示轨迹”。同一时间只能显示一个设备的轨迹。
+
+![1](https://github.com/dscao/gaode_maps/assets/16587914/0d9ee817-d68a-4776-a1ce-b8ab0267c170)
 
 
-![13](https://github.com/dscao/gaode_maps/assets/16587914/4ca7d18f-58ea-4adc-8f64-982c79c63e61)
+![2](https://github.com/dscao/gaode_maps/assets/16587914/4ca7d18f-58ea-4adc-8f64-982c79c63e61)
 
+
+![3](https://github.com/user-attachments/assets/55f94439-b7a9-4fea-b725-d3a141d14be8)
 
