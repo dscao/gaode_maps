@@ -95,4 +95,8 @@ body,
     .combobox-item-hover {
         background-color: #005a7e;
     }
+    
+    .amap-info-outer {
+        background-color: #333;
+    }
 }
