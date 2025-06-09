@@ -37,7 +37,7 @@ MapGaode.prototype = {
             
 			that.map.addControl(new AMap.Scale());
 			that.map.addControl(new AMap.MapType());
-
+			
             //交通
             that.trafficLayer = new AMap.TileLayer.Traffic({
                 map: that.map,

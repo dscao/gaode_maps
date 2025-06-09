@@ -19,3 +19,80 @@ body,
 .amap-copyright {
     display: none!important;
 }
+
+/* Dark Theme Styles - Applied automatically based on system preference */
+@media (prefers-color-scheme: dark) {
+    body,
+    html {
+        background-color: #1c1c1c;
+        color: #f0f0f0;
+    }
+
+    /* Style for EasyUI Window and Panels */
+    .easyui-window, .panel-body {
+        background-color: #2d2d2d !important;
+        color: #f0f0f0 !important;
+    }
+
+    .panel-header, .window-header {
+        background: #3c3c3c;
+        color: #f0f0f0;
+        border-color: #555;
+    }
+    
+    .panel-title {
+        color: #f0f0f0;
+    }
+
+    /* Style for DataGrid */
+    .datagrid-header, .datagrid-htable, .datagrid-header-row {
+        background: #3c3c3c;
+        color: #f0f0f0;
+    }
+
+    .datagrid-body, .datagrid-btable {
+        background: #2d2d2d;
+        color: #f0f0f0;
+    }
+
+    .datagrid-row {
+        border-color: #444;
+    }
+    
+    .datagrid-row-alt {
+        background: #333333;
+    }
+
+    /* Style for selected rows to ensure readability */
+    .datagrid-row-selected {
+        background: #005a7e; /* A darker blue that works well on dark backgrounds */
+        color: #ffffff;
+    }
+    
+    /* Style for links and buttons */
+    .l-btn-text {
+        color: #f0f0f0;
+    }
+    
+    .easyui-linkbutton {
+        background: #555;
+        border-color: #666;
+        color: #f0f0f0;
+    }
+    
+    /* Style for datetimebox and combobox */
+    .textbox, .textbox-text, .easyui-datetimebox, .easyui-combobox {
+        background-color: #3c3c3c !important;
+        color: #f0f0f0 !important;
+        border-color: #555 !important;
+    }
+    
+    .combo-panel {
+         background-color: #2d2d2d;
+         border-color: #555;
+    }
+    
+    .combobox-item-hover {
+        background-color: #005a7e;
+    }
+}

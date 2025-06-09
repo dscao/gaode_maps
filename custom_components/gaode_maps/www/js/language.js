@@ -64,3 +64,13 @@ var txtBackWalk = {
     "cn" : "步行",
     "en" : "walk"
 };
+
+var txtLightMode = {
+    "cn": "明亮模式",
+    "en": "Light Mode"
+};
+
+var txtDarkMode = {
+    "cn": "夜间模式",
+    "en": "Dark Mode"
+};

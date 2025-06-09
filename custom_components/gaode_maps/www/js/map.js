@@ -15,6 +15,19 @@ Map.prototype = {
         this.getMap().init(coordinate,zone);
     },
 	
+    setMapStyle: function(style) {
+        // Get the current map implementation (the MapGaode instance)
+        var currentMap = this.getMap();
+
+        // Access the '.map' property on the MapGaode instance and call setMapStyle
+        // This is the correct path: Map -> MapGaode -> map -> setMapStyle()
+        if (currentMap && currentMap.map) {
+             currentMap.map.setMapStyle(style);
+        } else {
+             console.error("The final map instance (currentMap.map) is not available.");
+        }
+    },
+    
 	//mengqi
 	query: function(coordinate,flag) {
 		if (flag && coordinate.length > 0)

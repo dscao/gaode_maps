@@ -9,6 +9,25 @@ var authToken = null;
 var newTokens = null;
 var newToken = null;
 
+function applyTheme(isDarkMode) {
+    if (!map) {
+        console.warn("applyTheme: map object is not ready yet.");
+        return;
+    }
+    
+    if (isDarkMode) {
+        console.log("System theme is dark. Applying dark map style.");
+        // 直接调用即可，因为我们已经在 map.js 中定义了它
+        map.setMapStyle('amap://styles/dark');
+    } else {
+        console.log("System theme is light. Applying normal map style.");
+        // 直接调用即可
+        map.setMapStyle('amap://styles/normal');
+    }
+}
+
+const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
 
 $(function() {
 //alert(txtDrawStart);
@@ -84,7 +103,7 @@ $(function() {
             lastCallTime = Date.now(); // 更新上一次调用的时间
         }
     }
-	
+    
 	var backhomeType = [];
 	backhomeType.push({ "text": txtBackDrive[lang], "id": "drive" });
 	backhomeType.push({ "text": txtBackRide[lang], "id": "ride" });
@@ -180,8 +199,7 @@ $(function() {
             map.showdevicemarker(rowData.id, false);
             //map.drawdrivingmarker(rowData.id, homePoint, backhomeTrackType);
 			//map.drawdrivingmarkerShow(backhomeTrackEnabled);
-        }
-		
+        }	
     });
 	
 	if (getDataMode == "client"){
@@ -359,7 +377,9 @@ $(function() {
         map.devicelist();
         syncToolbarState(['devicelist']);
     });
+    
 });
+
 
 //mengqi
 function SaveStorage(){
@@ -548,6 +568,13 @@ $(document).on("zoomchange", function() {
 
 
 $(document).on("mapInitFinished", function() {
+    console.log("Map init finished. Setting up theme.");
+    // 1. 立即根据当前系统设置应用主题
+    applyTheme(darkModeMediaQuery.matches);
+    // 2. 添加监听器，以便在系统主题变化时自动切换
+    darkModeMediaQuery.addEventListener('change', (e) => {
+        applyTheme(e.matches);
+    });
     syncToolbarState(['zoomin', 'zoomout', 'traffic', 'homepoint', 'homerange', 'devicelist']);
 	if (getDataMode == "client"){
 		url = HomeAssistantWebAPIUrl + "/api/states";
