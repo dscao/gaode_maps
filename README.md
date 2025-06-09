@@ -17,7 +17,7 @@ gaode_maps for homeassistant
 
 8、轨迹中的时间针对macless-haystack的时间点显示更多信息： 最后出现+上报时间+记录时间。（由 [cloud_gps](https://github.com/dscao/cloud_gps) 集成接入时）
 
-9、增加深色模式，统一按系统主题自动显示浅色模式或深色模式
+9、增加深色模式(高德API key必须正确填写)，统一按系统主题自动显示浅色模式或深色模式
 
 
 本项目修改自 https://github.com/cxlwill/ha-inkwavemap 
