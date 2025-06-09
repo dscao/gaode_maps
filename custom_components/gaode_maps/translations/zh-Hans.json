@@ -7,7 +7,7 @@
                 "data": {
                     "longtoken": "ha的长期访问令牌(app使用或不保存密码时必须填写)",
 					"trackerids": "追踪设备",
-                    "gaodekey": "高德地图Web端key(不正确将没有回家路线和时间)",
+                    "gaodekey": "高德地图Web端key(不正确将没有回家路线和时间且不能显示深色模式)",
                     "jscode": "安全密钥jscode"
                     
                 }
@@ -24,7 +24,7 @@
                 "data": {
                     "longtoken": "ha的长期访问令牌(app使用或不保存密码时必须填写)",
 					"trackerids": "追踪设备（不选择则为所有设备）",
-                    "gaodekey": "高德地图Web端key(不正确将不显示回家路线和时间)",
+                    "gaodekey": "高德地图Web端key(不正确将不显示回家路线和时间且不能显示深色模式)",
                     "jscode": "安全密钥jscode"
                 },
                 "description": "配置中，修改追踪设备时需重载集成生效。"
