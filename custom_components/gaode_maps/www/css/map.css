@@ -96,7 +96,7 @@ body,
         background-color: #005a7e;
     }
     
-    .amap-info-outer {
+    .amap-info-outer, .amap-marker-label {
         background-color: #333;
     }
 }
