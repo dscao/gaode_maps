@@ -120,6 +120,10 @@ MapGaode.prototype = {
                 }
             });
             
+            that.map.on('zoomchange', function() {
+                that.handleZoomChange();
+            });
+    
             $(document).trigger('mapInitFinished');
         });
     },
@@ -263,6 +267,7 @@ MapGaode.prototype = {
 		    });
 		  }
 		  that.trackPlaybackMass1.setMap(that.map);
+          this.handleZoomChange();
 		  
     },
 	
@@ -447,6 +452,7 @@ MapGaode.prototype = {
         }
         
         this.map.zoomIn();
+        this.handleZoomChange();
     },
     
     zoomout: function() {
@@ -459,6 +465,7 @@ MapGaode.prototype = {
         }
         
         this.map.zoomOut();
+        this.handleZoomChange();
     },
     
     traffic: function(flag) {
@@ -727,5 +734,51 @@ MapGaode.prototype = {
 				this.trackPlaybackMass2.hide();
             }
         }
+    },
+    
+    handleZoomChange: function() {
+        var that = this;
+        if (!this.trackPlaybackLayer || !this.trackPlaybackLine1) return;
+        
+        // 获取当前缩放级别
+        var currentZoom = this.map.getZoom();
+        
+        // 重新计算轨迹线的宽度
+        var newWeight = 3 * Math.pow(1.2, currentZoom - 15); // 基于原始缩放15计算
+        
+        // 更新轨迹线样式
+        that.trackPlaybackLine1.setOptions({
+            strokeWeight: newWeight
+        });
+        that.trackPlaybackLine2.setOptions({
+            strokeWeight: newWeight
+        });
+        
+        // 重新计算锚点大小
+        var style = this.calculateMarkerStyle(currentZoom);
+        that.trackPlaybackMass1.setStyle(style);
+        
+        // 重新定位轨迹标记
+        var position = that.trackPlaybackLayer.getPosition();
+        that.trackPlaybackLayer.setPosition(position);
+    },
+    
+    calculateMarkerStyle: function(zoom) {
+        var baseSize = 11;
+        var scale = Math.min(2.0, 1 + (zoom - 15) * 0.2); // 缩放比例
+        
+        return [{
+            url: 'images/mass0.png',
+            anchor: new AMap.Pixel(6 * scale, 6 * scale),
+            size: new AMap.Size(11 * scale, 11 * scale)
+        }, {
+            url: 'images/mass1.png',
+            anchor: new AMap.Pixel(4 * scale, 4 * scale),
+            size: new AMap.Size(7 * scale, 7 * scale)
+        }, {
+            url: 'images/mass2.png',
+            anchor: new AMap.Pixel(3 * scale, 3 * scale),
+            size: new AMap.Size(5 * scale, 5 * scale)
+        }];
     }
 }
