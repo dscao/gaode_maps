@@ -35,6 +35,17 @@ MapGaode.prototype = {
                 $(document).trigger('zoomchange');
             });
             
+            that.map.on('zoomend', function() {
+                if (that.trackPlaybackLine1) {
+                    var path = that.trackPlaybackLine1.getPath();
+                    that.trackPlaybackLine1.setPath(path);
+                }
+                if (that.trackPlaybackLine2) {
+                    var path = that.trackPlaybackLine2.getPath();
+                    that.trackPlaybackLine2.setPath(path);
+                }
+            });
+            
 			that.map.addControl(new AMap.Scale());
 			that.map.addControl(new AMap.MapType());
 			
@@ -119,7 +130,7 @@ MapGaode.prototype = {
                     that.homeWindow.open(that.map, markers[0].getPosition());
                 }
             });
-            
+
             $(document).trigger('mapInitFinished');
         });
     },
@@ -214,17 +225,7 @@ MapGaode.prototype = {
 			that.map.setFitView();
 			
 			that.DrawlineArr = lineArr;
-			
-            var zoom = that.map.getZoom();
-            var initialStyle;
-            if (zoom > 15) {
-                initialStyle = that.trackPlaybackMassStyle[0];
-            } else if (zoom > 10) {
-                initialStyle = that.trackPlaybackMassStyle[1];
-            } else {
-                initialStyle = that.trackPlaybackMassStyle[2];
-            }
-            
+
 			//定义锚点样式
 			var style = [{
 			  url: 'images/mass0.png',
@@ -252,10 +253,7 @@ MapGaode.prototype = {
 		  //this.trackPlaybackMass1.setStyle(style[2]);
 		  
 		  that.trackPlaybackMass2 = new AMap.Marker({content:' ',map:that.map})
-		  // that.trackPlaybackMass1.on('mouseover',function(e){
-		  // that.trackPlaybackMass2.setPosition(e.data.lnglat);
-		  // that.trackPlaybackMass2.setLabel({content:e.data.updatedate})
-		  // })
+          
 		  // 检测是否支持触摸事件
 		  var isTouchDevice = 'ontouchstart' in window || navigator.msMaxTouchPoints;
 
