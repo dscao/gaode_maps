@@ -83,7 +83,7 @@ class OptionsFlow(config_entries.OptionsFlow):
         """Handle a flow initialized by the user."""
         if user_input is not None:
             if user_input["longtoken"] == "null":
-                user_input["longtoken"] == ""
+                user_input["longtoken"] = ""
             self.config.update(user_input)
             self.hass.config_entries.async_update_entry(
                 self.config_entry,
