@@ -35,16 +35,18 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         devicetrackeridlist = ','.join(trackerids)
     else:
         devicetrackeridlist = ''
+    #hass.http.register_static_path("/gaode_maps_www", hass.config.path("custom_components/" + DOMAIN + "/www"), False)
     await hass.http.async_register_static_paths([
         StaticPathConfig("/gaode_maps_www", hass.config.path("custom_components/" + DOMAIN + "/www"), False)
     ])
+    
     frontend.async_register_built_in_panel(
         hass,
-        "iframe",
-        "墨澜地图",
-        "mdi:map",
-        DOMAIN,
-        { "url": f"/gaode_maps_www/index.html?hasstoken={hasstoken}&gaodekey={gaodekey}&jscode={jscode}&devicetrackeridlist={devicetrackeridlist}&v={VERSION}" },
+        component_name="iframe",
+        sidebar_title="墨澜地图",
+        sidebar_icon="mdi:map",
+        frontend_url_path=DOMAIN,
+        config={ "url": f"/gaode_maps_www/index.html?hasstoken={hasstoken}&gaodekey={gaodekey}&jscode={jscode}&devicetrackeridlist={devicetrackeridlist}&v={VERSION}" },
         require_admin=False
     )
                         
