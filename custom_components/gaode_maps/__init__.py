@@ -35,7 +35,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         devicetrackeridlist = ','.join(trackerids)
     else:
         devicetrackeridlist = ''
-    #hass.http.register_static_path("/gaode_maps_www", hass.config.path("custom_components/" + DOMAIN + "/www"), False)
+
     await hass.http.async_register_static_paths([
         StaticPathConfig("/gaode_maps_www", hass.config.path("custom_components/" + DOMAIN + "/www"), False)
     ])
